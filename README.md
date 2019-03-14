@@ -7,7 +7,7 @@
 
 ![Imgur](https://i.imgur.com/IYjTIGo.jpg)
 <br>
-[바이러스토탈](https://www.virustotal.com/)(VirusTotal)은 의심스러운 파일 및 URL을 분석하고 모든 종류의 악성 코드를 탐지하는 서비스이다. <그림 1> 은 일주일 동안 유입된 파일의 유형별 수에 대한 바이러스토탈의 그래프이다. 그래프에 따르면 PDF는 55만 개로 3번째를 차지하고 있으며 이 외에도 MS Word, MS Excel 등 우리가 자주 사용하는 문서형 파일이 속해있다.
+[바이러스토탈](https://www.virustotal.com/)(VirusTotal)은 의심스러운 파일 및 URL을 분석하고 모든 종류의 악성 코드를 탐지하는 서비스이다. 위 그림은 일주일 동안 유입된 파일의 유형별 수에 대한 바이러스토탈의 그래프이다. 그래프에 따르면 PDF는 55만 개로 3번째를 차지하고 있으며 이 외에도 MS Word, MS Excel 등 우리가 자주 사용하는 문서형 파일이 속해있다.
 <br>
 
 ![Imgur](https://i.imgur.com/XPbHyfi.jpg?1)
@@ -28,7 +28,7 @@ Although document-type malware continues to suffer damage, there are not many an
 In this project, we will create an engine that can detect document type malicious code to prevent the spread of document type malicious code and damage caused by it. 
 
 ## 소개 영상
-<iframe width="560" height="315" src="https://youtu.be/6xbYGKnqqCc" frameborder="0" allowfullscreen></iframe>
+[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/6xbYGKnqqCc/0.jpg)](https://www.youtube.com/watch?v=6xbYGKnqqCc)
 
 ## 팀 소개
 
