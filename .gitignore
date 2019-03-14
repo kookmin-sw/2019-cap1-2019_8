@@ -1,10 +1,3 @@
-# Created by https://www.gitignore.io/api/python,windows,pycharm
-# Edit at https://www.gitignore.io/?templates=python,windows,pycharm
-
-### PyCharm ###
-# Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio and WebStorm
-# Reference: https://intellij-support.jetbrains.com/hc/en-us/articles/206544839
-
 # User-specific stuff
 .idea/**/workspace.xml
 .idea/**/tasks.xml
@@ -225,8 +218,5 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
-
-# python settings
-settings.py
 
 # End of https://www.gitignore.io/api/python,windows,pycharm
