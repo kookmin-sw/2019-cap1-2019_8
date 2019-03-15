@@ -19,13 +19,7 @@
 
 ## Abstract
 
-The number of malicious codes is rapidly increasing worldwide. Recently, the number of document type malicious codes among malicious codes is increasing. Especially, the way of distributing document type malicious codes is becoming a hot topic. Typically, the GandCrab Ransomware, which appeared in January 2018, is spread by being disguised as a document file that attracts people's attention. And Sigma Ransomware, which appeared worldwide in March 2018, is spread by being disguised as a resume. This type of malware is becoming more intelligent and sophisticated.  
-<br>
-VirusTotal is a service that analyzes suspicious files and URLs and detects all kinds of malware. <Figure 1> is a graph of the virus total for the number of types of files imported for a week. According to the graph, PDF is the third with 550K, and other documents such as MS Word, MS Excel, etc. are frequently used. 
-<br>
-Although document-type malware continues to suffer damage, there are not many antiviruses that professionally detect document-type malware. This can cause malicious code to spread easily, which can lead to social problems that infect users' PCs.
-
-In this project, we will create an engine that can detect document type malicious code to prevent the spread of document type malicious code and damage caused by it. 
+The number of malicious codes is rapidly increasing worldwide. Recently, damage caused by document type malicious code such as PDF file and MS Office is increasing. However, very few anti-virus softwares are available to detect them professionally. This project develops an engine that detects malicious documents using machine learning. We expect to prevent the spread of malicious documents and to reduce instances of damage caused by document type malicious code. The engine can also be developed as open-source software, so it can be modified and supplemented by multiple users.
 
 ## 소개 영상
 [![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/6xbYGKnqqCc/0.jpg)](https://www.youtube.com/watch?v=6xbYGKnqqCc)
