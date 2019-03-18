@@ -1,3 +1,4 @@
+import hashlib
 import xml.dom.minidom
 import traceback
 import sys
@@ -5,7 +6,7 @@ import zipfile
 import urllib.request as urllib23
 
 
-#Convert 2 Bytes If Python 3
+# Convert 2 Bytes If Python 3
 def _c2bip3(string):
     if sys.version_info[0] > 2:
         return bytes([ord(x) for x in string])
@@ -133,7 +134,8 @@ def _update_words(word, word_extract, slash, words, hexcode, names, last_name, i
                         entropy.removeInsideStream(ord(char))
                 inside_stream = False
         if f_out != None:
-            if slash == '/' and '/' + word in ('/JS', '/JavaScript', '/AA', '/OpenAction', '/JBIG2Decode', '/RichMedia', '/Launch'):
+            if slash == '/' and '/' + word in (
+            '/JS', '/JavaScript', '/AA', '/OpenAction', '/JBIG2Decode', '/RichMedia', '/Launch'):
                 word_extractSwapped = _hex_2_string(_swap_name(word_extract))
                 f_out.write(_c2bip3(word_extractSwapped))
                 print('/%s -> /%s' % (_hex_2_string(word_extract), word_extractSwapped))
@@ -147,7 +149,8 @@ class CVE_2009_3459:
         self.count = 0
 
     def check(self, last_name, word):
-        if (last_name == '/Colors' and word.isdigit() and int(word) > 2^24): # decided to alert when the number of colors is expressed with more than 3 bytes
+        if (last_name == '/Colors' and word.isdigit() and int(
+                word) > 2 ^ 24):  # decided to alert when the number of colors is expressed with more than 3 bytes
             self.count += 1
 
 
@@ -161,7 +164,8 @@ def _xml_add_attribute(xmlDoc, name, value=None):
 
 
 def _pdf_2_string(xmlDoc, nozero=False):
-    result = 'PDFiD %s %s\n' % (xmlDoc.documentElement.getAttribute('Version'), xmlDoc.documentElement.getAttribute('Filename'))
+    result = 'PDFiD %s %s\n' % (
+    xmlDoc.documentElement.getAttribute('Version'), xmlDoc.documentElement.getAttribute('Filename'))
     if xmlDoc.documentElement.getAttribute('ErrorOccured') == 'True':
         return result + '***Error occured***\n%s\n' % xmlDoc.documentElement.getAttribute('ErrorMessage')
 
@@ -178,24 +182,28 @@ def _pdf_2_string(xmlDoc, nozero=False):
         result += ' %-16s %7d\n' % ('%%EOF', int(xmlDoc.documentElement.getAttribute('CountEOF')))
 
     if xmlDoc.documentElement.getAttribute('CountCharsAfterLastEOF') != '':
-        result += ' %-16s %7d\n' % ('After last %%EOF', int(xmlDoc.documentElement.getAttribute('CountCharsAfterLastEOF')))
+        result += ' %-16s %7d\n' % (
+        'After last %%EOF', int(xmlDoc.documentElement.getAttribute('CountCharsAfterLastEOF')))
 
     for node in xmlDoc.documentElement.getElementsByTagName('Dates')[0].childNodes:
         result += ' %-23s %s\n' % (node.getAttribute('Value'), node.getAttribute('Name'))
 
     if xmlDoc.documentElement.getAttribute('TotalEntropy') != '':
-        result += ' Total entropy:           %s (%10s bytes)\n' % (xmlDoc.documentElement.getAttribute('TotalEntropy'), xmlDoc.documentElement.getAttribute('TotalCount'))
+        result += ' Total entropy:           %s (%10s bytes)\n' % (
+        xmlDoc.documentElement.getAttribute('TotalEntropy'), xmlDoc.documentElement.getAttribute('TotalCount'))
 
     if xmlDoc.documentElement.getAttribute('StreamEntropy') != '':
-        result += ' Entropy inside streams:  %s (%10s bytes)\n' % (xmlDoc.documentElement.getAttribute('StreamEntropy'), xmlDoc.documentElement.getAttribute('StreamCount'))
+        result += ' Entropy inside streams:  %s (%10s bytes)\n' % (
+        xmlDoc.documentElement.getAttribute('StreamEntropy'), xmlDoc.documentElement.getAttribute('StreamCount'))
 
     if xmlDoc.documentElement.getAttribute('NonStreamEntropy') != '':
-        result += ' Entropy outside streams: %s (%10s bytes)\n' % (xmlDoc.documentElement.getAttribute('NonStreamEntropy'), xmlDoc.documentElement.getAttribute('NonStreamCount'))
+        result += ' Entropy outside streams: %s (%10s bytes)\n' % (
+        xmlDoc.documentElement.getAttribute('NonStreamEntropy'), xmlDoc.documentElement.getAttribute('NonStreamCount'))
 
     return result
 
 
-def extract(file, names=True):
+def pdf_parse(file, names=True):
     word = ''
     word_extract = []
     hexcode = False
@@ -241,7 +249,7 @@ def extract(file, names=True):
                 '/DCTDecode',
                 '/JPXDecode',
                 '/Crypt'
-               ]
+                ]
     words = {}
     dates = []
 
@@ -266,17 +274,17 @@ def extract(file, names=True):
         if entropy != None:
             for byteHeader in bytes_header:
                 entropy.add(byteHeader, inside_stream)
-       
+
         if pdf_header == None:
             att_is_pdf.nodeValue = 'False'
-      
+
             return _pdf_2_string(xmlDoc)
-     
+
         else:
             if pdf_header == None:
                 att_is_pdf.nodeValue = 'False'
                 pdf_header = ''
-        
+
             else:
                 att_is_pdf.nodeValue = 'True'
             att = xmlDoc.createAttribute('Header')
@@ -289,35 +297,47 @@ def extract(file, names=True):
             if charUpper >= 'A' and charUpper <= 'Z' or charUpper >= '0' and charUpper <= '9':
                 word += char
                 word_extract.append(char)
-     
+
             elif slash == '/' and char == '#':
                 d1 = binary_file_object.byte()
                 if d1 != None:
                     d2 = binary_file_object.byte()
-       
-                    if d2 != None and (chr(d1) >= '0' and chr(d1) <= '9' or chr(d1).upper() >= 'A' and chr(d1).upper() <= 'F') and (chr(d2) >= '0' and chr(d2) <= '9' or chr(d2).upper() >= 'A' and chr(d2).upper() <= 'F'):
+
+                    if d2 != None and (chr(d1) >= '0' and chr(d1) <= '9' or chr(d1).upper() >= 'A' and chr(
+                            d1).upper() <= 'F') and (
+                            chr(d2) >= '0' and chr(d2) <= '9' or chr(d2).upper() >= 'A' and chr(d2).upper() <= 'F'):
                         word += chr(int(chr(d1) + chr(d2), 16))
                         word_extract.append(int(chr(d1) + chr(d2), 16))
                         hexcode = True
-      
+
                         if entropy != None:
                             entropy.add(d1, inside_stream)
                             entropy.add(d2, inside_stream)
-     
+
                         if pdf_eof != None:
                             pdf_eof.parse(d1)
                             pdf_eof.parse(d2)
                     else:
                         binary_file_object.unget(d2)
                         binary_file_object.unget(d1)
-                        (word, word_extract, hexcode, last_name, inside_stream) = _update_words(word, word_extract, slash, words, hexcode, names, last_name, inside_stream, entropy, f_out)
+                        (word, word_extract, hexcode, last_name, inside_stream) = _update_words(word, word_extract,
+                                                                                                slash, words, hexcode,
+                                                                                                names, last_name,
+                                                                                                inside_stream, entropy,
+                                                                                                f_out)
                 else:
                     binary_file_object.unget(d1)
-                    (word, word_extract, hexcode, last_name, inside_stream) = _update_words(word, word_extract, slash, words, hexcode, names, last_name, inside_stream, entropy, f_out)
+                    (word, word_extract, hexcode, last_name, inside_stream) = _update_words(word, word_extract, slash,
+                                                                                            words, hexcode, names,
+                                                                                            last_name, inside_stream,
+                                                                                            entropy, f_out)
             else:
                 cve_2009_3459.check(last_name, word)
 
-                (word, word_extract, hexcode, last_name, inside_stream) = _update_words(word, word_extract, slash, words, hexcode, names, last_name, inside_stream, entropy, f_out)
+                (word, word_extract, hexcode, last_name, inside_stream) = _update_words(word, word_extract, slash,
+                                                                                        words, hexcode, names,
+                                                                                        last_name, inside_stream,
+                                                                                        entropy, f_out)
                 if char == '/':
                     slash = '/'
                 else:
@@ -333,7 +353,9 @@ def extract(file, names=True):
                 pdf_eof.parse(char)
 
             byte = binary_file_object.byte()
-        (word, word_extract, hexcode, last_name, inside_stream) = _update_words(word, word_extract, slash, words, hexcode, names, last_name, inside_stream, entropy, f_out)
+        (word, word_extract, hexcode, last_name, inside_stream) = _update_words(word, word_extract, slash, words,
+                                                                                hexcode, names, last_name,
+                                                                                inside_stream, entropy, f_out)
 
         # check to see if file ended with %%EOF.  If so, we can reset charsAfterLastEOF and add one to EOF count.  This is never performed in
         # the parse function because it never gets called due to hitting the end of file.
@@ -362,18 +384,18 @@ def extract(file, names=True):
     att_count_non_stream = xmlDoc.createAttribute('NonStreamCount')
     xmlDoc.documentElement.setAttributeNode(att_count_non_stream)
     if entropy != None:
-        (countAll, entropyAll , countStream, entropyStream, countNonStream, entropyNonStream) = entropy.calc()
+        (countAll, entropyAll, countStream, entropyStream, countNonStream, entropyNonStream) = entropy.calc()
         att_entropy_all.nodeValue = '%f' % entropyAll
         att_count_all.nodeValue = '%d' % countAll
         if entropyStream == None:
             att_entropy_stream.nodeValue = 'N/A     '
-        
+
         else:
             att_entropy_stream.nodeValue = '%f' % entropyStream
         att_count_stream.nodeValue = '%d' % countStream
         att_entropy_non_stream.nodeValue = '%f' % entropyNonStream
         att_count_non_stream.nodeValue = '%d' % countNonStream
-    
+
     else:
         att_entropy_all.nodeValue = ''
         att_count_all.nodeValue = ''
@@ -383,10 +405,10 @@ def extract(file, names=True):
         att_count_non_stream.nodeValue = ''
     att_count_eof = xmlDoc.createAttribute('CountEOF')
     xmlDoc.documentElement.setAttributeNode(att_count_eof)
-    
+
     att_count_chars_after_last_eof = xmlDoc.createAttribute('CountCharsAfterLastEOF')
     xmlDoc.documentElement.setAttributeNode(att_count_chars_after_last_eof)
-    
+
     if pdf_eof != None:
         att_count_eof.nodeValue = '%d' % pdf_eof.cntEOFs
         if pdf_eof.cntEOFs > 0:
@@ -451,6 +473,21 @@ def extract(file, names=True):
         ele_date.setAttributeNode(att)
 
     return _pdf_2_string(xmlDoc)
+
+
+def extract(file):
+    parsed_data = pdf_parse(file)
+
+    feature_vector = [0 for _ in range(128)]
+
+    for line in parsed_data:
+        tag, contents = line.strip().split()
+
+        hash_tag = hashlib.sha256(tag.encode()).hexdigest()
+        feature_vector[int(hash_tag, 16) & 127] += int(contents)
+
+    return feature_vector
+
 
 if __name__ == '__main__':
     pass
