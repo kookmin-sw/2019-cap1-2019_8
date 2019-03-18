@@ -1,4 +1,9 @@
 # User-specific stuff
+dream/.idea/
+dream/dream.ini
+dream/setup.py
+dream/.pypirc
+
 .idea/*
 .idea/**/workspace.xml
 .idea/**/tasks.xml
