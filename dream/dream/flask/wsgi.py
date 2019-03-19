@@ -1,4 +1,4 @@
-from dream.flask.server import application
+from dream.flask.backend import application
 
 if __name__ == '__main__':
     application.run()
