@@ -13,6 +13,7 @@ def start(config):
 @click.command()
 def stop():
     os.system("pkill python3")
+    pass
 
 
 def main():
