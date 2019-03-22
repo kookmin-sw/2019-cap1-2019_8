@@ -203,7 +203,7 @@ def _pdf_2_string(xmlDoc, nozero=False):
     return result
 
 
-def pdf_parse(file, names=True):
+def _pdf_parse(file, names=True):
     word = ''
     word_extract = []
     hexcode = False
@@ -476,7 +476,7 @@ def pdf_parse(file, names=True):
 
 
 def extract(file):
-    parsed_data = pdf_parse(file)
+    parsed_data = _pdf_parse(file)
 
     feature_vector = [0 for _ in range(128)]
 
