@@ -1,9 +1,13 @@
 import sys
 import os
 
-def run(config="dream.ini"):
-    os.system(f"uwsgi --ini {config}")
+
+# TODO(@LEO_MOON): modify entry point
+def main():
+    from dream.cli import cli
+
+    cli.main()
 
 
 if __name__ == '__main__':
-    run()
+    main()

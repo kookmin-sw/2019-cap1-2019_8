@@ -1,8 +1,7 @@
-import os
 import sys
 import click
 
-from dream.__main__ import run
+from __main__ import run
 
 @click.command()
 @click.option("--config", "-c", type=click.Path(exists=True))
@@ -10,9 +9,9 @@ def start(config):
     run(config)
 
 
+# TODO(@LEO_MOON): add function for stopping dream-av-av
 @click.command()
 def stop():
-    os.system("pkill python3")
     pass
 
 
