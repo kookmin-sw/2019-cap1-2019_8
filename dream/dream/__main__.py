@@ -1,8 +1,11 @@
 import sys
 import os
 
-def run(config="dream.ini"):
-    os.system(f"uwsgi --ini {config}")
+
+def run():
+    from .cli import cli
+
+    cli.main()
 
 
 if __name__ == '__main__':
