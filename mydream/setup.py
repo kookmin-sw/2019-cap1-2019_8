@@ -12,13 +12,13 @@ def get_requirements():
 requires = get_requirements()
 
 setup(
-    name = 'dream-av',
+    name = 'mydream',
     version = '0.2.1',
-    # packages = ['dream-av'],
+    # packages = ['mydream'],
     packages=find_packages(),
     setup_requires=requires,
     entry_points = {
         'console_scripts': [
-            'dream-av = dream-av.__main__:main'
+            'mydream = mydream.__main__:main'
         ]
     })
