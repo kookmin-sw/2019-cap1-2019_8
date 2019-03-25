@@ -1,10 +1,9 @@
 from flask import Flask, request, jsonify
-from flask_restful import Resource, Api, reqparse
 
 import magic
 
-from dream.extract import pdf
-from dream.util import predict
+from mydream.extract import pdf
+from mydream.util import predict
 
 application = Flask(__name__)
 
@@ -14,8 +13,8 @@ def Print():
     return "DREAM(Detecting in Real-timE mAlicious document using Machine learning)"
 
 
-# TODO(@LEO_MOON) Feature extraction based on file
-@application.route("/upload", methods=["POST"])
+# TODO(@LEO_MOON) Feature extraction and predict based on file
+@application.route("/dream_upload", methods=["POST"])
 def upload_file():
     if request.method == "POST":
         f = request.files["file"]
@@ -27,7 +26,6 @@ def upload_file():
 
             probability = predict.predict(feature, 0)
 
-
         elif "Word" in file_magic:
             pass
 
@@ -38,4 +36,4 @@ def upload_file():
 
 
 if __name__ == '__main__':
-    application.run()
+    application.run(host="0.0.0.0", port=8888, debug=True)
