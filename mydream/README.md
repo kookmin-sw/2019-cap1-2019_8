@@ -1,13 +1,13 @@
 ## Installation
 
 ```bash
-pip install dream-av
+pip install mydream
 ```
 
 ## RUN
 ```bash
-dream-av start --config dream.ini --no-download
-dream-av stop
+mydream start --config dream.ini --no-download
+mydream stop
 ```
 
 ## REQUIREMENT
@@ -16,6 +16,6 @@ numpy
 lightgbm
 uwsgi
 flask
-python-magic
+python-magic-bin==0.4.14
 click
 ```
