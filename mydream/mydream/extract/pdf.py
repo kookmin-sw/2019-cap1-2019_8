@@ -477,14 +477,24 @@ def _pdf_parse(file, names=True):
 
 def extract(file):
     parsed_data = _pdf_parse(file)
-
+    lines = parsed_data.split("\n")
     feature_vector = [0 for _ in range(128)]
 
-    for line in parsed_data:
+    for line in lines[:-1]:
         tag, contents = line.strip().split()
 
         hash_tag = hashlib.sha256(tag.encode()).hexdigest()
-        feature_vector[int(hash_tag, 16) & 127] += int(contents)
+        if tag == "PDF_Header":
+            try:
+                feature_vector[int(hash_tag, 16) & 127] += float(contents[-3:])
+            except:
+                continue
+
+        else:
+            try:
+                feature_vector[int(hash_tag, 16) & 127] += int(contents[0])
+            except:
+                continue
 
     return feature_vector
 

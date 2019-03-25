@@ -1,4 +1,4 @@
-from dream.backends.backend import application
+from mydream.backends.backend import application
 
 if __name__ == '__main__':
     application.run()

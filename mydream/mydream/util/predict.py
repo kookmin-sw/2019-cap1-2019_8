@@ -2,10 +2,10 @@ import lightgbm as lgb
 import numpy as np
 import os
 
+from .__init__ import __ROOT__
 
-__ROOT__ = os.path.dirname(os.path.abspath(__file__))
 
-
+# TODO(@LEO_MOON) send output to web server
 # mode >> 0 : pdf, 1 : doc/docs, 2 : hwp
 def predict(feature, mode=0, th=0.5):
     if mode == 0:
