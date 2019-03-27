@@ -3,6 +3,8 @@ import os
 from bs4 import BeautifulSoup
 from setting import *
 
+check_extend = ['doc', 'DOC', 'docx', 'DOCX']
+
 
 def run():
 	res = requests.get(URL)
