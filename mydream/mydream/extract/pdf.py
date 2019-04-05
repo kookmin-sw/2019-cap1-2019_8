@@ -169,24 +169,24 @@ def _pdf_2_string(xmlDoc, nozero=False):
     if xmlDoc.documentElement.getAttribute('ErrorOccured') == 'True':
         return result + '***Error occured***\n%s\n' % xmlDoc.documentElement.getAttribute('ErrorMessage')
 
-    result += ' PDF Header: %s\n' % xmlDoc.documentElement.getAttribute('Header')
+    result = f' PDF_Header {xmlDoc.documentElement.getAttribute("Header").split("-")[-1]}\n'
     for node in xmlDoc.documentElement.getElementsByTagName('Keywords')[0].childNodes:
         if not nozero or nozero and int(node.getAttribute('Count')) > 0:
-            result += ' %-16s %7d' % (node.getAttribute('Name'), int(node.getAttribute('Count')))
+            result += ' %s %d' % (node.getAttribute('Name'), int(node.getAttribute('Count')))
 
             if int(node.getAttribute('HexcodeCount')) > 0:
                 result += '(%d)' % int(node.getAttribute('HexcodeCount'))
             result += '\n'
 
     if xmlDoc.documentElement.getAttribute('CountEOF') != '':
-        result += ' %-16s %7d\n' % ('%%EOF', int(xmlDoc.documentElement.getAttribute('CountEOF')))
+        result += ' %s %d\n' % ('%%EOF', int(xmlDoc.documentElement.getAttribute('CountEOF')))
 
     if xmlDoc.documentElement.getAttribute('CountCharsAfterLastEOF') != '':
-        result += ' %-16s %7d\n' % (
+        result += ' %s %d\n' % (
         'After last %%EOF', int(xmlDoc.documentElement.getAttribute('CountCharsAfterLastEOF')))
 
     for node in xmlDoc.documentElement.getElementsByTagName('Dates')[0].childNodes:
-        result += ' %-23s %s\n' % (node.getAttribute('Value'), node.getAttribute('Name'))
+        result += ' %s %s\n' % (node.getAttribute('Value'), node.getAttribute('Name'))
 
     if xmlDoc.documentElement.getAttribute('TotalEntropy') != '':
         result += ' Total entropy:           %s (%10s bytes)\n' % (
@@ -203,7 +203,7 @@ def _pdf_2_string(xmlDoc, nozero=False):
     return result
 
 
-def _pdf_parse(file, names=True):
+def pdf_parse(file, names=True):
     word = ''
     word_extract = []
     hexcode = False
@@ -436,7 +436,7 @@ def _pdf_parse(file, names=True):
     ele_keyword = xmlDoc.createElement('Keyword')
     ele_keywords.appendChild(ele_keyword)
     att = xmlDoc.createAttribute('Name')
-    att.nodeValue = '/Colors > 2^24'
+    att.nodeValue = '/Colors_2^24'
     ele_keyword.setAttributeNode(att)
     att = xmlDoc.createAttribute('Count')
     att.nodeValue = str(cve_2009_3459.count)
@@ -471,33 +471,31 @@ def _pdf_parse(file, names=True):
         att = xmlDoc.createAttribute('Name')
         att.nodeValue = date[1]
         ele_date.setAttributeNode(att)
-
     return _pdf_2_string(xmlDoc)
 
 
 def extract(file):
-    parsed_data = _pdf_parse(file)
-    lines = parsed_data.split("\n")
+    parsed_data = pdf_parse(file)
+    md5 = os.path.basename(file).split(".")[0]
+
     feature_vector = [0 for _ in range(128)]
 
-    for line in lines[:-1]:
-        tag, contents = line.strip().split()
+    lines = parsed_data.split("\n")
+    del lines[-1]
 
-        hash_tag = hashlib.sha256(tag.encode()).hexdigest()
-        if tag == "PDF_Header":
-            try:
-                feature_vector[int(hash_tag, 16) & 127] += float(contents[-3:])
-            except:
-                continue
+    for line in lines:
+        try:
+            tag, contents = line.strip().split()
 
-        else:
-            try:
-                feature_vector[int(hash_tag, 16) & 127] += int(contents[0])
-            except:
-                continue
+            hash_tag = hashlib.sha256(tag.encode()).hexdigest()
 
-    return feature_vector
+            if tag != "PDF_Header":
+                if "(" in contents:
+                    feature_vector[int(hash_tag, 16) & 127] += int(contents[:-3])
+                else:
+                    feature_vector[int(hash_tag, 16) & 127] += int(contents)
+            else:
+                feature_vector[int(hash_tag, 16) & 127] += float(contents)
 
-
-if __name__ == '__main__':
-    pass
+        except:
+            continue
