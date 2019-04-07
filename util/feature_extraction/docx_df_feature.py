@@ -1,104 +1,117 @@
-import configparser
+import math
+import collections
 import os
 import zipfile
+import pickle
 import numpy as np
-import re
-import xml.dom.minidom
 
-config = configparser.ConfigParser(interpolation=configparser.ExtendedInterpolation())
-config.read('config.ini')
-
-mal_file_path = config.get('PATH', 'MAL_DIR')
-ben_file_path = config.get('PATH', 'BEN_DIR')
+FILE_PATH = r''
+SAVE_PATH = r''
 
 
-def make_file_list(file_path):
+def create_file_list(PATH):
     file_list = []
-    for root, dirs, files in os.walk(file_path):
+    for root, dirs, files in os.walk(PATH):
         for file in files:
-            file_list.append(file)
-           # print (file)
+            file_list.append(os.path.join(root, file))
     return file_list
 
-def get_feature_cnt(file_path, file_list):
-    result = dict()
 
-    for i in range(len(file_list)):
+def set_count(file_list):
+    m_set = set()
+    for i in file_list:
         try:
-            document = zipfile.ZipFile(os.path.join(file_path, file_list[i]))
-            features = document.namelist()
+            # document will be the filetype zipfile.ZipFile
+            document = zipfile.ZipFile(i)
+            name_list = document.namelist()
+            for i in name_list:
+                items = i.split('/')
+                for i in range(0, len(items)):
+                    m_set.add('/'.join(items[i:]))
+        except zipfile.BadZipfile:
+            continue
+    return m_set
 
-            for k in features:
-                if k not in result:
-                    result[k] = 1
-                else:
-                    result[k] += 1
+
+def make_table(file_list):
+    df_dict = {}
+    for i in file_list:
+        try:
+            document = zipfile.ZipFile(i)
+            name_list = document.namelist()
+
+            for i in name_list:
+                items = i.split('/')
+                for i in range(0, len(items)):
+                    df_dict['/'.join(items[i:])] = df_dict.get('/'.join(items[i:]), 0) + 1
 
         except zipfile.BadZipfile:
             continue
 
-    print(len(result.keys()))
-    #print(result)
-    return result
+    df_rank_list = sorted(df_dict.items(), key=lambda x: x[1], reverse=True)[:1024]
+
+    df_rank_dict = dict()
+    rank = 0
+
+    for k, _ in df_rank_list:
+        df_rank_dict[k] = rank
+        rank += 1
+
+    return df_rank_dict
 
 
-def get_feature_df(mal_feature_cnt, ben_feature_cnt, total_fnum):
-    result = dict()
+def get_entropy(data):
+    """Calculate the entropy of a chunk of data."""
 
-    for k in mal_feature_cnt:
-        if k in ben_feature_cnt:
-            result[k] = mal_feature_cnt[k] + ben_feature_cnt[k]
-        else:
-            result[k] = 1
+    if len(data) == 0:
+        return 0.0
 
-    for k in ben_feature_cnt:
-        if k in result:
+    occurences = collections.Counter(bytearray(data))
+
+    entropy = 0
+    for x in occurences.values():
+        p_x = float(x) / len(data)
+        entropy -= p_x * math.log(p_x, 2)
+
+    return entropy
+
+
+def make_feature_vec(df_rank_dict, file_list):
+    for path in file_list:
+        try:
+            feature_vector = [0 for _ in range(1024)]
+            entropy_list = []
+            file_size = []
+
+            with zipfile.ZipFile(path) as document:
+                name_list = document.namelist()
+
+                for name in name_list:
+                    items = name.split('/')
+                    for i in range(0, len(items)):
+                        k = '/'.join(items[i:])
+                        if k in df_rank_dict:
+                            feature_vector[df_rank_dict[k]] = 1
+
+
+
+                for name in name_list:
+                    with document.open(name) as f:
+                        data = f.read()
+                        entropy_list.append(get_entropy(data))
+                        file_size.append(len(data))
+
+                feature_vector += [min(entropy_list), max(entropy_list), np.mean(entropy_list),
+                                   os.path.getsize(path), min(file_size), max(file_size), np.mean(file_size)]
+
+            with open(os.path.join(SAVE_PATH, str(os.path.basename(path).split('.')[0])) + '.pk1', 'wb') as f:
+                pickle.dump(feature_vector, f)
+
+        except zipfile.BadZipfile:
             continue
-        else:
-            result[k] = 1
-
-    for k in result:
-        val = round(result[k] / total_fnum, 3)
-        result[k] = val
-
-    return result
 
 
-
-def make_feature_vec(file_path, file_list, feature_df):
-        total_feature_val = []
-
-        for i in range(len(file_list)):
-            result = dict(zip(feature_df, [0 for i in range(len(feature_df))]))
-            try:
-                # document will be the filetype zipfile.ZipFile
-                document = zipfile.ZipFile(os.path.join(file_path, file_list[i]))
-                feature = document.namelist()
-
-                for k in result:
-                    if k in feature:
-                        result[k] = feature_df[k]
-                        break
-
-                feature_val = list(result.values())
-                total_feature_val.append(feature_val)
-
-            except zipfile.BadZipfile:
-                continue
-
-        return total_feature_val
-
-if __name__ == '__main__':
-    mal_file_list = make_file_list(mal_file_path)
-    ben_file_list = make_file_list(ben_file_path)
-
-    total_fnum = len(mal_file_list) + len(ben_file_list)
-
-    mal_feature_cnt = get_feature_cnt(mal_file_path, mal_file_list)
-    ben_feature_cnt = get_feature_cnt(ben_file_path, ben_file_list)
-
-    feature_df = get_feature_df(mal_feature_cnt, ben_feature_cnt, total_fnum)
-
-    #print(len(feature_df.keys()))
-    mal_feature_vector = make_feature_vec(mal_file_path, mal_file_list, feature_df)
-    ben_feature_vector = make_feature_vec(ben_file_path, ben_file_list, feature_df)
+if __name__ == "__main__":
+    file_list = create_file_list(FILE_PATH)
+    df_dict = make_table(file_list)
+    make_feature_vec(df_dict, file_list)
