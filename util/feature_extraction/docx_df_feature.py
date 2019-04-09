@@ -104,7 +104,7 @@ def make_feature_vec(df_rank_dict, file_list):
                 feature_vector += [min(entropy_list), max(entropy_list), np.mean(entropy_list),
                                    os.path.getsize(path), min(file_size), max(file_size), np.mean(file_size)]
 
-            with open(os.path.join(SAVE_PATH, str(os.path.basename(path).split('.')[0])) + '.pk1', 'wb') as f:
+            with open(os.path.join(SAVE_PATH, str(os.path.basename(path).split('.')[0])) + '.pkl', 'wb') as f:
                 pickle.dump(feature_vector, f)
 
         except zipfile.BadZipfile:
