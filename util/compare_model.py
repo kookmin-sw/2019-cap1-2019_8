@@ -10,34 +10,40 @@ from sklearn.ensemble import GradientBoostingClassifier
 from sklearn.ensemble import AdaBoostClassifier
 import lightgbm as lgb
 from sklearn.metrics import accuracy_score
+from sklearn.model_selection import cross_val_score
 
 config = configparser.ConfigParser(interpolation=configparser.ExtendedInterpolation())
 config.read('config.ini')
 
 data = config.get('FILE', 'DATA')
 
+models = []
+models.append(("LR", LogisticRegression()))
+models.append(("DT", DecisionTreeClassifier()))
+models.append(("SVM", SVC()))
+models.append(("NB", GaussianNB()))
+models.append(("KNN", KNeighborsClassifier()))
+models.append(("RF", RandomForestClassifier()))
+models.append(("GB", GradientBoostingClassifier()))
+models.append(("AB", AdaBoostClassifier()))
+models.append(("ANN", MLPClassifier()))
 
-def compare_model(x_train, y_train):
-    models = []
-    models.append(("LR", LogisticRegression()))
-    models.append(("DT", DecisionTreeClassifier()))
-    models.append(("SVM", SVC()))
-    models.append(("NB", GaussianNB()))
-    models.append(("KNN",KNeighborsClassifier()))
-    models.append(("RF", RandomForestClassifier()))
-    models.append(("GB", GradientBoostingClassifier()))
-    models.append(("AB",AdaBoostClassifier()))
-    models.append(("ANN", MLPClassifier()))
-
+def get_acc(x_train, y_train):
     for name, model in models:
         model.fit(x_train, y_train)
         y_pred = model.predict(x_train)
         print(name, "'s Accuracy is ", accuracy_score(y_train, y_pred))
 
 
+
+def get_cv(x_train, y_train):
+    for name, model in models:
+        scores = np.mean(cross_val_score(model, x_train, y_train, cv=10))
+        print(name, "'s mean cv 10-fold is ", scores)
+
+
 def run_lgb(x_train, y_train)
     # create dataset for lightgbm
-    lgb_train = lgb.Dataset(x_train, y_train)
     # specify your configurations as a dict
     params = {
         'boosting_type': 'gbdt',
@@ -76,5 +82,6 @@ if __name__ == "__main__":
     x_train = df.iloc[:, :-1].values
     y_train = df.iloc[:, -1].values
 
-    compare_model(x_train, y_train)
+    get_acc(x_train, y_train)
+    get_cv(x_train, y_train)
     run_lgb(x_train, y_train)
