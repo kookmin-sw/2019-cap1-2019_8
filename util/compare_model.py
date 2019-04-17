@@ -1,4 +1,3 @@
-import configparser
 import pandas as pd
 from sklearn.linear_model import LogisticRegression
 from sklearn.tree import DecisionTreeClassifier
@@ -12,10 +11,7 @@ import lightgbm as lgb
 from sklearn.metrics import accuracy_score
 from sklearn.model_selection import cross_val_score
 
-config = configparser.ConfigParser(interpolation=configparser.ExtendedInterpolation())
-config.read('config.ini')
-
-data = config.get('FILE', 'DATA')
+data_path = ''
 
 models = []
 models.append(("LR", LogisticRegression()))
@@ -43,24 +39,11 @@ def get_cv(x_train, y_train):
 
 
 def run_lgb(x_train, y_train)
-    # create dataset for lightgbm
-    # specify your configurations as a dict
-    params = {
-        'boosting_type': 'gbdt',
-        'objective': 'regression',
-        'metric': {'l2', 'l1'},
-        'num_leaves': 31,
-        'learning_rate': 0.05,
-        'feature_fraction': 0.9,
-        'bagging_fraction': 0.8,
-        'bagging_freq': 5,
-        'verbose': 0
-    }
-    print('Starting training...')
-    # train
     gbm = lgb.LGBMRegressor(num_leaves=31,
                             learning_rate=0.05,
                             n_estimators=20)
+    print('Starting training...')
+    # train
     gbm.fit(x_train, y_train,
             eval_set=[(x_train, y_train)],
             eval_metric='l1',
@@ -78,7 +61,7 @@ def run_lgb(x_train, y_train)
 
 
 if __name__ == "__main__":
-    df = pd.read_csv(data)
+    df = pd.read_csv(data_path)
     x_train = df.iloc[:, :-1].values
     y_train = df.iloc[:, -1].values
 
