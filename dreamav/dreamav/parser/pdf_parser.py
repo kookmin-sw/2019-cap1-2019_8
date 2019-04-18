@@ -6,8 +6,6 @@ import zipfile
 import urllib.request as urllib23
 import os
 
-
-# Convert 2 Bytes If Python 3
 def _c2bip3(string):
     if sys.version_info[0] > 2:
         return bytes([ord(x) for x in string])
@@ -204,7 +202,7 @@ def _pdf_2_string(xmlDoc, nozero=False):
     return result
 
 
-def pdf_parse(file, names=True):
+def get_tag(file, names=True):
     word = ''
     word_extract = []
     hexcode = False
@@ -475,28 +473,3 @@ def pdf_parse(file, names=True):
     return _pdf_2_string(xmlDoc)
 
 
-def extract(file):
-    parsed_data = pdf_parse(file)
-    md5 = os.path.basename(file).split(".")[0]
-
-    feature_vector = [0 for _ in range(128)]
-
-    lines = parsed_data.split("\n")
-    del lines[-1]
-
-    for line in lines:
-        try:
-            tag, contents = line.strip().split()
-
-            hash_tag = hashlib.sha256(tag.encode()).hexdigest()
-
-            if tag != "PDF_Header":
-                if "(" in contents:
-                    feature_vector[int(hash_tag, 16) & 127] += int(contents[:-3])
-                else:
-                    feature_vector[int(hash_tag, 16) & 127] += int(contents)
-            else:
-                feature_vector[int(hash_tag, 16) & 127] += float(contents)
-
-        except:
-            continue

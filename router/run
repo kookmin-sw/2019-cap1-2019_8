@@ -1,0 +1,3 @@
+#!/bin/bash
+docker build . -t nginx_dream
+docker run -d -v /tmp/dream.sock:/tmp/dream.sock -p 8080:80 nginx_dream
