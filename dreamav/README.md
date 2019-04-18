@@ -9,7 +9,7 @@ pip3 install dreamav
 # start dreamav with downloading latest model
 dreamav start
 
-# if don't need to download latest model
+# start dreamav without downloading latest model
 dreamav start --no-download
 
 # Stop dreamav
