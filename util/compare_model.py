@@ -60,21 +60,15 @@ def get_cv(x_train, y_train):
 
 
 def run_lgb(x_train, y_train):
-    # train
+    # 10 Fold Cross Validation
+    N_FOLDS = 10
+         
     trn_data = lgb.Dataset(x_train, label=y_train)
 
     print('Starting training...')
-    bst = lgb.train(param, trn_data,
-                    num_boost_round=5000,
-                    valid_sets=trn_data,
-                    verbose_eval=100,
-                    early_stopping_rounds=200
-                    )
+    cv_results = lgb.cv(param, trn, nfold=N_FOLDS, verbose_eval=20, early_stopping_rounds=100)
 
-    y_pred = bst.predict(x_train)
-    # convert into binary values
-    y_pred = [ 1 if x >= 0.5 else 0 for x in y_pred ]
-    print("LGB's Accuracy is ", accuracy_score(y_train, y_pred))
+    print('Best CV score:', cv_results['auc-mean'][-1])
 
 
 
