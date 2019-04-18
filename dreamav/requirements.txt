@@ -2,6 +2,6 @@ numpy==1.16.2
 lightgbm==2.2.4
 uWSGI==2.0.18
 Flask==1.0.2
-python-magic-bin==0.4.15
+python-magic==0.4.15
 Click==7.0
 requests==2.21.0
