@@ -1,6 +1,6 @@
 # User-specific stuff
-mydream/.idea/**
-mydream/mydream/__pycache__
+dreamav/.idea/**
+dreamav/dreamav/__pycache__
 
 .idea/*
 .idea/**/workspace.xml
