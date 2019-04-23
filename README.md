@@ -38,50 +38,52 @@ The number of malicious codes is rapidly increasing worldwide. Recently, damage 
 ### 문다민(팀장)
 ![Imgur](https://i.imgur.com/8WF2AQw.jpg?1)
 ```
-* Student ID : 20163104
-* E-Mail : vmfn0401@gmail.com
-* Role : 기계 학습 모델 설계 및 구축, 엔진 설계 및 개발
+Student ID : 20163104
+E-Mail : vmfn0401@gmail.com
+Role : 기계 학습 모델 설계 및 구축, 엔진 설계 및 개발
 ```
 
 ### 김기환  
 ![Imgur](https://i.imgur.com/x9BC407.jpg?1)
 ```
-* Student ID : 20133194
-* E-Mail : kihwan@kookmin.ac.kr
-* Role : 데이터 수집, 데이터 전처리
+Student ID : 20133194
+E-Mail : kihwan@kookmin.ac.kr
+Role : 데이터 수집, 데이터 전처리
 ```
 
 ### 김현석
 ![Imgur](https://i.imgur.com/wnlYFk2.jpg?1)
 ```
-- Student ID : 20143050
-- E-Mail : kjuk02@gmail.com
-- Role : 데이터 라벨링, 웹 서버 구축
+Student ID : 20143050
+E-Mail : kjuk02@gmail.com
+Role : 데이터 라벨링, 웹 서버 구축
 ```
 
 ### 정혜리
 ![Imgur](https://i.imgur.com/mIECcrl.jpg?1)
 ```
-* Student ID : 20163158
-* E-Mail : kbi09@kookmin.ac.kr
-* Role : 데이터 전처리, 문서 작업
+Student ID : 20163158
+E-Mail : kbi09@kookmin.ac.kr
+Role : 데이터 전처리, 문서 작업
 ```
 
 ### 방유한(외국인)
 ![Imgur](https://i.imgur.com/o3YcpMP.jpg?1)
 ```
-* Student ID : 20163652
-* E-Mail : fangyuhan@naver.com
-* Role : 로고 디자인, 유저 인터페이스 구현
+Student ID : 20163652
+E-Mail : fangyuhan@naver.com
+Role : 로고 디자인, 유저 인터페이스 구현
 ```
 
 ## Reference
+**URL**
 ```buildoutcfg
-* **URL**
 1. https://blog.didierstevens.com/programs/pdf-tools/
 2. https://www.av-test.org/en/news/av-test-awards-this-is-the-elite-class-of-it-security-2018/
-
-* **PAPER**
+```
+<br>
+**PAPER**
+```
 1. Kilian Weinberger KILIAN, Anirban Dasgupta ANIRBAN, John Langford et.al. Feature Hashing for Large Scale Multitask Learning. Proc. ICML 2009.
 2. Nedim ˇSrndi´c and Pavel Laskov. Detection of Malicious PDF Files Based on Hierarchical Document Structure. In Proceedings of the Network and Distributed System Security Symposium, NDSS 2013
 3. 강아름, 정영섭, 김세령 외 3. 문서 구조 및 스트림 오브젝트 분석을 통한 문서형 악성코드 탐지, 한국컴퓨터정보학회 논문지 제23권 제11호(통권 제176호), 2018.11, 85-93 (9 pages)
