@@ -64,7 +64,7 @@ Role : 데이터 라벨링, 웹 서버 구축
 ```
 Student ID : 20163158
 E-Mail : kbi09@kookmin.ac.kr
-Role : 데이터 전처리, 문서 작업
+Role : 데이터 전처리, 특징 
 ```
 
 ### 방유한(외국인)
@@ -80,6 +80,7 @@ Role : 로고 디자인, 유저 인터페이스 구현
 ```buildoutcfg
 1. https://blog.didierstevens.com/programs/pdf-tools/
 2. https://www.av-test.org/en/news/av-test-awards-this-is-the-elite-class-of-it-security-2018/
+3. https://github.com/j40903272/MalConv-keras
 ```
 - **PAPER**
 ```buildoutcfg
@@ -87,4 +88,5 @@ Role : 로고 디자인, 유저 인터페이스 구현
 2. Nedim ˇSrndi´c and Pavel Laskov. Detection of Malicious PDF Files Based on Hierarchical Document Structure. In Proceedings of the Network and Distributed System Security Symposium, NDSS 2013
 3. 강아름, 정영섭, 김세령 외 3. 문서 구조 및 스트림 오브젝트 분석을 통한 문서형 악성코드 탐지, 한국컴퓨터정보학회 논문지 제23권 제11호(통권 제176호), 2018.11, 85-93 (9 pages)
 4. NissimN,CohenA,EloviciY. ALDOCX: Detection of Unknown Malicious Microsoft Office Documents Using Designated Active Learning Methods Based on New Structural Feature Extraction Methodology. IEEE TRANSACTIONS ON INFORMATION FORENSICS AND SECURITY, VOL. 12, NO. 3, MARCH 2017
+5. Edward Raff, Jon Barker, Jared Sylvester et.al. Malware Detection by Eating a Whole EXE. AAAI Publications, Workshops at the Thirty-Second AAAI Conference on Artificial Intelligence 2018
 ```
