@@ -1,46 +1,48 @@
+import os
+import time
+import pickle
 import argparse
-import numpy as np
 import pandas as pd
-import utils
-from keras.models import load_model
-from preprocess import preprocess
+from keras.preprocessing.sequence import pad_sequences
 
 parser = argparse.ArgumentParser(description='Malconv-keras classifier')
-parser.add_argument('--batch_size', type=int, default=64)
-parser.add_argument('--verbose', type=int, default=1)
-parser.add_argument('--limit', type=float, default=0.)
-parser.add_argument('--model_path', type=str, default='../saved/malconv.h5')
-parser.add_argument('--result_path', type=str, default='../saved/result.csv')
+parser.add_argument('--max_len', type=int, default=200000)
+parser.add_argument('--save_path', type=str, default='../saved/preprocess_data.pkl')
 parser.add_argument('csv', type=str)
 
-def predict(model, fn_list, label, batch_size=64, verbose=1):
-    
-    max_len = model.input.shape[1]
-    pred = model.predict_generator(
-        utils.data_generator(fn_list, label, max_len, batch_size, shuffle=False),
-        steps=len(fn_list)//batch_size + 1,
-        verbose=verbose
-        )
-    return pred
+
+def preprocess(fn_list, max_len):
+    '''
+    Return processed data (ndarray) and original file length (list)
+    '''
+    corpus = []
+    for fn in fn_list:
+        if not os.path.isfile(fn):
+            print(fn, 'not exist')
+            pass
+        else:
+            with open(fn, 'rb') as f:
+                corpus.append(f.read())
+
+    corpus = [[byte for byte in doc] for doc in corpus]
+    len_list = [len(doc) for doc in corpus]
+    seq = pad_sequences(corpus, maxlen=max_len, padding='post', truncating='post')
+
+    return seq, len_list
+
 
 if __name__ == '__main__':
     args = parser.parse_args()
-    
-    # limit gpu memory
-    if args.limit > 0:
-        utils.limit_gpu_memory(args.limit)
-    
-    # load model
-    model = load_model(args.model_path)
-    
-    # read data
+
     df = pd.read_csv(args.csv, header=None)
     fn_list = df[0].values
-    label = np.zeros((fn_list.shape))
-    
-    pred = predict(model, fn_list, label, args.batch_size, args.verbose)
-    df['predict score'] = pred
-    df[0] = [i.split('/')[-1] for i in fn_list] # os.path.basename
-    df.to_csv(args.result_path, header=None, index=False)
-    print('Results writen in', args.result_path)
+
+    print('Preprocessing ...... this may take a while ...')
+    st = time.time()
+    processed_data = preprocess(fn_list, args.max_len)[0]
+    print('Finished ...... %d sec' % int(time.time() - st))
+
+    with open(args.save_path, 'wb') as f:
+        pickle.dump(processed_data, f)
+    print('Preprocessed data store in', args.save_path)
 
