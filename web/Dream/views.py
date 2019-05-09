@@ -8,6 +8,7 @@ from .forms import DocumentForm
 from .models import Document
 
 
+
 class ProgressBarUploadView(View):
     def get(self, request):
         file_list = Document.objects.all()
@@ -31,3 +32,8 @@ def clear_database(request):
         d_file.file.delete()
         d_file.delete()
     return redirect(request.POST.get('next'))
+
+
+
+def my_view(request):
+    return redirect('Dream:progress_bar_upload')
