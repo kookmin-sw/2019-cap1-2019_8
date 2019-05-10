@@ -64,7 +64,7 @@ Role : 데이터 라벨링, 웹 서버 구축
 ```
 Student ID : 20163158
 E-Mail : kbi09@kookmin.ac.kr
-Role : 데이터 전처리, 특징 
+Role : 데이터 전처리, 논문 분석 및 문서 작업 
 ```
 
 ### 방유한(외국인)
