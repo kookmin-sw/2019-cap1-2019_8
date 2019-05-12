@@ -2,8 +2,6 @@
 
 {% load static %}
 
-{% block title %}Progress Bar Upload{% endblock %}
-
 {% block javascript %}
   {# JQUERY FILE UPLOAD SCRIPTS #}
   <script src="{% static 'js/jquery-file-upload/vendor/jquery.ui.widget.js' %}"></script>
@@ -12,50 +10,48 @@
 
   {# PAGE SCRIPTS #}
   <script src="{% static 'Dream/js/progress-bar-upload.js' %}"></script>
-  <script>
-    $(document).ready(function(){
-      $("#name").click(function(){
-        alert("Please login and download.");
-      });
-    });
-  </script>
+
 {% endblock %}
 
 {% block file_upload_content %}
-  <div style="margin-bottom: 20px;">
-    <button type="button" class="btn btn-primary js-upload-Dream">
-      <span class="glyphicon glyphicon-cloud-upload"></span> Upload File
-    </button>
-    <input id="fileupload" type="file" name="file" multiple
-           style="display: none;"
-           data-url="{% url 'Dream:progress_bar_upload' %}"
-           data-form-data='{"csrfmiddlewaretoken": "{{ csrf_token }}"}'>
-  </div>
+ <div id="gallery" class="table table-bordered">
+      <table class="table table-dark table-hover">
+        <thead>
+          <tr>
+            <th>File</th>
+            <th>Name</th>
+            <th>MD5</th>
+            <th>size</th>
+            <th>type</th>
+          </tr>
+        </thead>
+        <tbody>
+            {% if user.is_authenticated %}
+                {% for d_file in files %}
+                  <tr>
+                      <td><a href="{{ d_file.file.url }}"> Download </a></td>
+                      <td>{{ d_file.title }}</td>
+                      <td>{{ d_file.md5 }}</td>
+                      <td>{{ d_file.size }} KB</td>
+                      <td>{{ d_file.types }}</td>
+                  </tr>
+                {% endfor %}
+            {% else %}
+                {% for d_file in files %}
+                    <tr>
+                        <td><a onclick="alert('Please login and download.')"> Download </a></td>
+                        <td>{{ d_file.title }}</td>
+                        <td>{{ d_file.md5 }}</td>
+                        <td>{{ d_file.size }} KB</td>
+                        <td>{{ d_file.types }}</td>
+                    </tr>
+                {% endfor %}
+            {% endif %}
+        </tbody>
+      </table>
+</div>
 
-  <table id="gallery" class="table table-bordered">
-    <thead>
-      <tr>
-        <th>File List</th>
-      </tr>
-    </thead>
-      <tbody>
-        {% if user.is_authenticated %}
-          {% for d_file in files %}
-          <tr>
-            <td><a href="{{ d_file.file.url }}">{{ d_file.file.title }}</a></td>
-            <td><a>fdfdfd</a></td>
-          </tr>
-          {% endfor %}
-        {% else %}
-          {% for d_file in files %}
-          <tr>
-            <td><a id="name">{{ d_file.file.name }}</a></td>
-            <td><a>fdfdfd</a></td>
-          </tr>
-          {% endfor %}
-        {% endif %}
-      </tbody>
-  </table>
+
   <div class="row">
       <div class="col-sm-12 text-center">
           <div class="pagination">
@@ -78,18 +74,4 @@
       </div>
   </div>
 
-  <div class="modal fade" id="modal-progress" data-backdrop="static" data-keyboard="false">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h4 class="modal-title">Uploading...</h4>
-        </div>
-        <div class="modal-body">
-          <div class="progress">
-            <div class="progress-bar" role="progressbar" style="width: 0%;">0%</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
 {% endblock %}

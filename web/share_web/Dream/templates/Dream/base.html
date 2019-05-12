@@ -1,42 +1,20 @@
 {% extends 'base.html' %}
 
 {% block content %}
+  {% include 'includes/header2.html' %}
+  <h1 class="page-header text-center">
+    Download
+  </h1>
   {% if user.is_authenticated %}
-    <form class="form-inline ml-auto">
+    <form class="text-right">
        <a href="{% url 'Dream:logout'%}" class="btn btn-primary pull-right">Log out</a>
     </form>
   {% else %}
-    <form class="form-inline ml-auto">
+
+    <form class="text-right">
       <a href="{% url 'Dream:login' %}" class="btn btn-primary pull-right">Log in</a>
     </form>
   {% endif %}
-  <form method="post" action="{% url 'Dream:clear_database' %}">
-    {% csrf_token %}
-    <input type="hidden" name="next" value="{{ request.path }}">
-    <button type="submit" class="btn btn-danger pull-right">
-      <span class="glyphicon glyphicon-trash"></span> Clear Database
-    </button>
-  </form>
-  <h1 class="page-header">
-    Upload
-    <small>/ {% block title %}{% endblock %}</small>
-  </h1>
-  <div class="row">
-    <div class="col-md-3">
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h3 class="panel-title">Choice</h3>
-        </div>
-        <div class="list-group">
-          <a href="{% url 'Dream:progress_bar_upload' %}" class="list-group-item{% if request.path == '/Dream/progress-bar-upload/' %} active{% endif %}">
-            Progress Bar Upload
-          </a>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-9">
-      {% block file_upload_content %}
-      {% endblock %}
-    </div>
-  </div>
+  {% block file_upload_content %}
+  {% endblock %}
 {% endblock %}
