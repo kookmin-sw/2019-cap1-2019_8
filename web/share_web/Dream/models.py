@@ -63,5 +63,7 @@ class Document(models.Model):
     #validate_file = FileValidator(content_types=('application/x-dosexec'))
     title = models.CharField(max_length=255, blank=True)
     file = models.FileField(upload_to='')
-
+    size = models.CharField(max_length=255, blank=True)
+    md5 = models.CharField(max_length=255, blank=True)
+    types = models.CharField(max_length=255, blank=True)
     uploaded_at = models.DateTimeField(auto_now_add=True)
