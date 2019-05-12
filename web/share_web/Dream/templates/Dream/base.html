@@ -10,10 +10,27 @@
        <a href="{% url 'Dream:logout'%}" class="btn btn-primary pull-right">Log out</a>
     </form>
   {% else %}
-
     <form class="text-right">
       <a href="{% url 'Dream:login' %}" class="btn btn-primary pull-right">Log in</a>
     </form>
+  {% endif %}
+  <div class="containter">
+    <form method="post" action="{% url 'Dream:progress_bar_upload' %}">
+      <div class="input-group md-form form-sm form-1 pl-0">
+        {% csrf_token %}
+        <div class="input-group-prepend">
+          <button type="submit" class="btn-primary input-group-text cyan lighten-2" id="basic-text1">
+            <i class="fas fa-search text-white" aria-hidden="true"></i>
+          </button>
+          <table class="form-control my-0 py-1">
+            {{ form.as_table}}
+          </table>
+        </div>
+      </div>
+    </form>
+  </div>
+  {% if result %}
+    <h1 class="text-center">About {{ count }} results </h1>
   {% endif %}
   {% block file_upload_content %}
   {% endblock %}
