@@ -1,3 +1,7 @@
+[![License](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/kookmin-sw/2019-cap1-2019_8/blob/master/LICENSE)
+[![PyPI Version](https://img.shields.io/badge/pypi-v0.2.3-blue.svg)](https://pypi.org/project/dreamav/)
+[![Python Versions](https://img.shields.io/badge/python-3.6%20I%203.7-blue.svg)](https://pypi.org/project/lightgbm)
+
 ![Imgur](https://i.imgur.com/9GT1dUK.jpg?1)
 # DREAM(Detecting in Real-timE mAlicious document using Machine learning)
 
@@ -27,9 +31,9 @@ The number of malicious codes is rapidly increasing worldwide. Recently, damage 
 ## 팀 소개
 
 ### Professor : 윤명근
+![Imgur](https://i.imgur.com/bQ8sapx.jpg?1)
 
-
-### 문다민(팀장)
+### 문다민
 ![Imgur](https://i.imgur.com/8WF2AQw.jpg?1)
 ```
 Student ID : 20163104
@@ -69,6 +73,11 @@ E-Mail : fangyuhan@naver.com
 Role : 로고 디자인, 유저 인터페이스 구현
 ```
 
+## Installation
+```buildoutcfg
+Dream-AV: https://github.com/kookmin-sw/2019-cap1-2019_8/tree/master/dreamav
+```
+
 ## Reference
 ```buildoutcfg
 https://blog.didierstevens.com/programs/pdf-tools/
@@ -78,4 +87,10 @@ Kilian Weinberger KILIAN, Anirban Dasgupta ANIRBAN, John Langford et.al. Feature
 Nedim ˇSrndi´c and Pavel Laskov. Detection of Malicious PDF Files Based on Hierarchical Document Structure. In Proceedings of the Network and Distributed System Security Symposium, NDSS 2013
 강아름, 정영섭, 김세령 외 3. 문서 구조 및 스트림 오브젝트 분석을 통한 문서형 악성코드 탐지, 한국컴퓨터정보학회 논문지 제23권 제11호(통권 제176호), 2018.11, 85-93 (9 pages)
 NissimN,CohenA,EloviciY. ALDOCX: Detection of Unknown Malicious Microsoft Office Documents Using Designated Active Learning Methods Based on New Structural Feature Extraction Methodology. IEEE TRANSACTIONS ON INFORMATION FORENSICS AND SECURITY, VOL. 12, NO. 3, MARCH 2017
+```
+
+## Contact Us
+```buildoutcfg
+Email: vmfn0401@gmail.com
+Slack: https://dreamav.slack.com
 ```
