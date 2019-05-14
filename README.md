@@ -1,6 +1,3 @@
-[![License](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/kookmin-sw/2019-cap1-2019_8/blob/master/LICENSE)
-[![PyPI Version](https://img.shields.io/badge/pypi-v0.2.3-blue.svg)](https://pypi.org/project/dreamav/)
-[![Python Versions](https://img.shields.io/badge/python-3.6%20I%203.7-blue.svg)](https://pypi.org/project/lightgbm)
 
 ![Imgur](https://i.imgur.com/9GT1dUK.jpg?1)
 # DREAM(Detecting in Real-timE mAlicious document using Machine learning)
