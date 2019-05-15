@@ -1,8 +1,8 @@
 # DreamAV, Anti-virus for detecting malicious documents(PDF, MS Word)
 
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/kookmin-sw/2019-cap1-2019_8/blob/master/LICENSE)
-[![PyPI Version](https://img.shields.io/badge/pypi-v0.2.3-blue.svg)](https://pypi.org/project/dreamav/)
-[![Python Versions](https://img.shields.io/badge/python-3.6%20I%203.7-blue.svg)](https://pypi.org/project/lightgbm)
+[![PyPI Version](https://img.shields.io/badge/pypi-v0.2.5-blue.svg)](https://pypi.org/project/dreamav/)
+[![Python Versions](https://img.shields.io/badge/python-3.6-blue.svg)](https://pypi.org/project/lightgbm)
 
 
 ## INSTALLATION
@@ -19,9 +19,6 @@ dreamav start
 # Stop dreamav
 dreamav stop
 
-# Update latest classifier
-dreamav update
-
 # Predict file
 dreamav submit /path/to/file 
 
@@ -29,8 +26,39 @@ dreamav submit /path/to/file
 dreamav scan /path/to/file
 ```
 
-## HOW TO INTERLOCK YOUR SERVER 
+## HOW TO INTERLOCK WITH YOUR SERVER
+We provide results to json like below, select the results of model you want  
+```buildoutcfg
+# PDF
+{
+    "result":{
+        "LightGBM": PROB,
+        "XGBoost": PROB,
+        "DT": PROB,
+        "RF": PROB,
+    }
+}
 
+# MS Word(DOC)
+{
+    "result":{
+        "DL": PROB
+    }
+}
+```
+in your server, upload file to engine like below, and set a threshold.
+```buildoutcfg
+# example/django
+req = requests.post("http://localhost:8080/dream_upload", \
+                            files={"file": self.request.FILES["file"]})
+if req.status_code == 200:
+    result = req.json()
+
+# set threshold(recommend=0.5)
+th = 0.5    
+if float(result["result"]["LightGBM"]) < th:
+    ...
+```
 
 ## REQUIREMENT
 ```
@@ -44,4 +72,11 @@ requests==2.21.0
 tensorflow==1.13.1
 keras==2.2.4
 scikit-learn==0.20.0
+```
+
+## Contact Us
+If you find some false positive or false negative files, please contact us
+```buildoutcfg
+Email: vmfn0401@gmail.com
+slack: dreamav.slack.com
 ```
