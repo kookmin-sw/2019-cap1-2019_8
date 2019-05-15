@@ -3,6 +3,8 @@ import os
 
 from dreamav.parser import pdf_parser
 
+SIZE_OF_FEATURE_VECTOR = 128
+
 def extract(file):
     keywords = {'obj': 0,
                 'endobj': 1,
@@ -45,11 +47,7 @@ def extract(file):
                 '/JPXDecode': 38,
                 '/Crypt': 39
                 }
-
-    SIZE_OF_FEATURE_VECTOR = 128
-
     parsed_data = pdf_parser.get_tag(file)
-    md5 = os.path.basename(file).split(".")[0]
 
     fixed_vector = [0 for _ in range(40)]
     feature_vector = [0 for _ in range(SIZE_OF_FEATURE_VECTOR)]
@@ -59,22 +57,30 @@ def extract(file):
 
     for line in lines[:-1]:
         try:
-            tag, contents = line.strip().split()
-
-            hash_tag = hashlib.sha256(tag.encode()).hexdigest()
+            tag = "_".join(line.strip().split()[:-1])
+            contents = line.strip().split()[-1]
 
             if tag in keywords:
-                fixed_vector[keywords[tag]] += contents
+                if "(" in contents:
+                    fixed_vector[keywords[tag]] += int(contents[:contents.index("(")])
+                else:
+                    fixed_vector[keywords[tag]] += int(contents)
 
             elif tag != "PDF_Header":
+                hash_tag = hashlib.sha256(tag.encode()).hexdigest()
+
                 if "(" in contents:
-                    feature_vector[int(hash_tag, 16) & (SIZE_OF_FEATURE_VECTOR - 1)] += int(contents[:-3])
+                    feature_vector[int(hash_tag, 16) & (SIZE_OF_FEATURE_VECTOR - 1)] += int(
+                        contents[:contents.index("(")])
                 else:
                     feature_vector[int(hash_tag, 16) & (SIZE_OF_FEATURE_VECTOR - 1)] += int(contents)
             else:
                 version[0] = float(contents)
 
-        except:
+        except Exception as e:
+            print(line)
+            print(e)
+            print()
             continue
 
     feature_vector = version + fixed_vector + feature_vector

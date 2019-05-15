@@ -1,43 +1,50 @@
-from flask import Flask, request, jsonify
-
+import numpy as np
 import magic
+import os
 
-from dreamav.core import generate_feature_vector_pdf
-from dreamav.util import predict
+from flask import Flask, request, jsonify
+from werkzeug.utils import secure_filename
+from dreamav.util import generate_feature_vector_pdf
+from dreamav.core import predict
 
 application = Flask(__name__)
 
 @application.route("/")
 def Print():
-    return "DREAM(Detecting in Real-timE mAlicious document using Machine learning)"
+    return "DREAM-AV"
 
 
 # TODO(@LEO_MOON) Feature extraction and predict based on file
 @application.route("/dream_upload", methods=["GET", "POST"])
 def upload_file():
-    # if request.method == "POST":
-    #
-    #
-    #
-    #     f = request.files["file"]
-    #
-    #     file_magic = magic.from_buffer(f)
-    #
-    #     if "PDF" in file_magic:
-    #         feature = pdf.core(f)
-    #
-    #         probability = predict.predict(feature, 0)
-    #
-    #     elif "Word" in file_magic:
-    #         pass
-    #
+    if request.method == "POST":
+        file = request.files["file"]
+        filename = secure_filename(file.filename)
+        file.save(filename)
+        file_magic = magic.from_file(filename)
 
-    result = 0
-    return jsonify({
-        "result": 0
-    })
+        if "PDF" in file_magic:
+            feature = generate_feature_vector_pdf.extract(filename)
+            result_dict = predict.predict_pdf(feature)
+            os.remove(filename)
+            return jsonify(result_dict)
+
+        elif "Composite Document" in file_magic:
+            f_list = np.array([filename])
+            result_dict = predict.predict_msword(f_list, np.zeros((f_list.shape)))
+            os.remove(filename)
+            return jsonify({result_dict})
+
+        else:
+            return jsonify({
+                "unsupported file format": -1
+            })
 
 
+    else:
+        return jsonify({
+            "Upload check": 1
+        })
 
 
 if __name__ == '__main__':

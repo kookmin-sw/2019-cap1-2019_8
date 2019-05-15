@@ -1,3 +1,3 @@
 import os
 
-_ROOT = os.path.abspath(os.path.dirname(__file__))
+__ROOT__ = os.path.dirname(os.path.abspath(__file__))
