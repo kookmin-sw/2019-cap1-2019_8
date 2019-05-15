@@ -1,3 +1,4 @@
+
 ![Imgur](https://i.imgur.com/9GT1dUK.jpg?1)
 <br>
 국민대학교 2019년도 캡스톤 디자인 8조
@@ -33,9 +34,9 @@ The number of malicious codes is rapidly increasing worldwide. Recently, damage 
 ## 팀 소개
 
 ### Professor : 윤명근
+![Imgur](https://i.imgur.com/bQ8sapx.jpg?1)
 
-
-### 문다민(팀장)
+### 문다민
 ![Imgur](https://i.imgur.com/8WF2AQw.jpg?1)
 ```
 Student ID : 20163104
@@ -75,18 +76,11 @@ E-Mail : fangyuhan@naver.com
 Role : 로고 디자인, 유저 인터페이스 구현
 ```
 
+## Installation
+```buildoutcfg
+Dream-AV: https://github.com/kookmin-sw/2019-cap1-2019_8/tree/master/dreamav
+```
+
 ## Reference
 - **URL**
-```buildoutcfg
-1. https://blog.didierstevens.com/programs/pdf-tools/
-2. https://www.av-test.org/en/news/av-test-awards-this-is-the-elite-class-of-it-security-2018/
-3. https://github.com/j40903272/MalConv-keras
-```
-- **PAPER**
-```buildoutcfg
-1. Kilian Weinberger KILIAN, Anirban Dasgupta ANIRBAN, John Langford et.al. Feature Hashing for Large Scale Multitask Learning. Proc. ICML 2009.
-2. Nedim ˇSrndi´c and Pavel Laskov. Detection of Malicious PDF Files Based on Hierarchical Document Structure. In Proceedings of the Network and Distributed System Security Symposium, NDSS 2013
-3. 강아름, 정영섭, 김세령 외 3. 문서 구조 및 스트림 오브젝트 분석을 통한 문서형 악성코드 탐지, 한국컴퓨터정보학회 논문지 제23권 제11호(통권 제176호), 2018.11, 85-93 (9 pages)
-4. NissimN,CohenA,EloviciY. ALDOCX: Detection of Unknown Malicious Microsoft Office Documents Using Designated Active Learning Methods Based on New Structural Feature Extraction Methodology. IEEE TRANSACTIONS ON INFORMATION FORENSICS AND SECURITY, VOL. 12, NO. 3, MARCH 2017
-5. Edward Raff, Jon Barker, Jared Sylvester et.al. Malware Detection by Eating a Whole EXE. AAAI Publications, Workshops at the Thirty-Second AAAI Conference on Artificial Intelligence 2018
-```
+
