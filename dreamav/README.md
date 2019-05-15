@@ -5,13 +5,13 @@
 [![Python Versions](https://img.shields.io/badge/python-3.6-blue.svg)](https://pypi.org/project/lightgbm)
 
 
-## INSTALLATION
+## INSTALL
 
 ```bash
 pip3 install dreamav
 ```
 
-## RUN
+## HOW TO USE
 ```bash
 # Start dreamav 
 dreamav start
@@ -80,3 +80,6 @@ If you find some false positive or false negative files, please contact us
 Email: vmfn0401@gmail.com
 slack: dreamav.slack.com
 ```
+
+## License
+This project is licensed under the terms of the MIT license. See [LICENSE](https://github.com/kookmin-sw/2019-cap1-2019_8/blob/master/LICENSE) for additional details.
