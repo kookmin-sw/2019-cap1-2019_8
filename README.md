@@ -71,9 +71,7 @@ Role : 로고 디자인, 유저 인터페이스 구현
 ```
 
 ## Installation
-```buildoutcfg
-Dream-AV: https://github.com/kookmin-sw/2019-cap1-2019_8/tree/master/dreamav
-```
+Dream-AV: [INSTALL DREAMAV](https://github.com/kookmin-sw/2019-cap1-2019_8/tree/master/dreamav)
 
 ## Reference
 ```buildoutcfg
