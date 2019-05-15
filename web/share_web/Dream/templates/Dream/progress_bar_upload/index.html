@@ -1,0 +1,77 @@
+{% extends 'Dream/base.html' %}
+
+{% load static %}
+
+{% block javascript %}
+  {# JQUERY FILE UPLOAD SCRIPTS #}
+  <script src="{% static 'js/jquery-file-upload/vendor/jquery.ui.widget.js' %}"></script>
+  <script src="{% static 'js/jquery-file-upload/jquery.iframe-transport.js' %}"></script>
+  <script src="{% static 'js/jquery-file-upload/jquery.fileupload.js' %}"></script>
+
+  {# PAGE SCRIPTS #}
+  <script src="{% static 'Dream/js/progress-bar-upload.js' %}"></script>
+
+{% endblock %}
+
+{% block file_upload_content %}
+ <div id="gallery" class="table table-bordered">
+      <table class="table table-dark table-hover">
+        <thead>
+          <tr>
+            <th>File</th>
+            <th>Name</th>
+            <th>MD5</th>
+            <th>size</th>
+            <th>type</th>
+          </tr>
+        </thead>
+        <tbody>
+            {% if user.is_authenticated %}
+                {% for d_file in files %}
+                  <tr>
+                      <td><a href="{{ d_file.file.url }}"> Download </a></td>
+                      <td>{{ d_file.title }}</td>
+                      <td>{{ d_file.md5 }}</td>
+                      <td>{{ d_file.size }} KB</td>
+                      <td>{{ d_file.types }}</td>
+                  </tr>
+                {% endfor %}
+            {% else %}
+                {% for d_file in files %}
+                    <tr>
+                        <td><a onclick="alert('Please login and download.')"> Download </a></td>
+                        <td>{{ d_file.title }}</td>
+                        <td>{{ d_file.md5 }}</td>
+                        <td>{{ d_file.size }} KB</td>
+                        <td>{{ d_file.types }}</td>
+                    </tr>
+                {% endfor %}
+            {% endif %}
+        </tbody>
+      </table>
+</div>
+
+
+  <div class="row">
+      <div class="col-sm-12 text-center">
+          <div class="pagination">
+            <span class="step-links text-center" style="width:100%;">
+                {% if files.has_previous %}
+                    <a href="?page=1">&laquo;</a>
+                    <a href="?page={{ files.previous_page_number }}">{{ files.previous_page_number }}</a>
+                {% endif %}
+
+                <span class="current">
+                    {{ files.number }}
+                </span>
+
+                {% if files.has_next %}
+                    <a href="?page={{ files.next_page_number }}">{{ files.next_page_number }}</a>
+                    <a href="?page={{ files.paginator.num_pages }}">&raquo;</a>
+                {% endif %}
+            </span>
+          </div>
+      </div>
+  </div>
+
+{% endblock %}

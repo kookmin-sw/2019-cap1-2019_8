@@ -1,0 +1,141 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+  {% include 'includes/header.html' %}
+  <!-- Header -->
+  <header class="masthead">
+    <div class="container d-flex h-100 align-items-center">
+      <div class="mx-auto text-center">
+        <h1 class="mx-auto my-0 text-uppercase">Welcome Dream</h1>
+      </div>
+    </div>
+  </header>
+
+  <!-- About Section -->
+  <section id="about" class="about-section text-center">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 mx-auto">
+          <h2 class="text-white mb-4">What is DREAM?</h2>
+          <p class="text-white-50"> DREAM is an abbreviation for Detecting in Real-time EMlicious document using machine learning.
+            <a href="https://kookmin-sw.github.io/2019-cap1-2019_8/">The preview page </a>. This project develops an engine that detects malicious documents using machine learning.</p>
+        </div>
+      </div>
+      <img src="{% static 'img/Dream_logo.png' %}" class="img-fluid" alt="">
+    </div>
+  </section>
+
+  <!-- Projects Section -->
+  <section id="projects" class="projects-section bg-light">
+    <div class="container">
+
+      <!-- Project One Row -->
+      <div class="row justify-content-center no-gutters mb-5 mb-lg-0">
+        <div class="mx-auto">
+          <img class="img-fluid " src="{% static 'img/damin.jpg' %}" alt="">
+        </div>
+        <div class="col-lg-6">
+          <div class="bg-black text-center h-100 project">
+            <div class="d-flex h-100">
+              <div class="project-text w-100 my-auto text-center text-lg-left">
+                <h4 class="text-white">Damin Moon</h4>
+                <p class="mb-0 text-white-50">E-Mail : vmfn0401@gmail.com</p>
+                <hr class="d-none d-lg-block mb-0 ml-0">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Project Two Row -->
+      <div class="row justify-content-center no-gutters">
+        <div class="mx-auto">
+          <img class="img-fluid" src="{% static 'img/kihwan.jpg' %}" alt="">
+        </div>
+        <div class="col-lg-6 order-lg-first">
+          <div class="bg-black text-center h-100 project">
+            <div class="d-flex h-100">
+              <div class="project-text w-100 my-auto text-center text-lg-right">
+                <h4 class="text-white">Kihwan Kim</h4>
+                <p class="mb-0 text-white-50">E-Mail : kihwan@kookmin.ac.kr</p>
+                <hr class="d-none d-lg-block mb-0 mr-0">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Project Three Row -->
+      <div class="row justify-content-center no-gutters mb-5 mb-lg-0">
+        <div class="mx-auto">
+          <img class="img-fluid " src="{% static 'img/hyeonseok.jpg' %}" alt="">
+        </div>
+        <div class="col-lg-6">
+          <div class="bg-black text-center h-100 project">
+            <div class="d-flex h-100">
+              <div class="project-text w-100 my-auto text-center text-lg-left">
+                <h4 class="text-white">Hyeonseok Kim</h4>
+                <p class="mb-0 text-white-50">E-Mail : kjuk02@gmail.com</p>
+                <hr class="d-none d-lg-block mb-0 ml-0">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Project Four Row -->
+      <div class="row justify-content-center no-gutters">
+        <div class="mx-auto">
+          <img class="img-fluid" src="{% static 'img/hyelee.jpg' %}" alt="">
+        </div>
+        <div class="col-lg-6 order-lg-first">
+          <div class="bg-black text-center h-100 project">
+            <div class="d-flex h-100">
+              <div class="project-text w-100 my-auto text-center text-lg-right">
+                <h4 class="text-white">Hyelee Jung</h4>
+                <p class="mb-0 text-white-50">E-Mail : kbi09@kookmin.ac.kr</p>
+                <hr class="d-none d-lg-block mb-0 mr-0">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Project Five Row -->
+      <div class="row justify-content-center no-gutters mb-5 mb-lg-0">
+        <div class="mx-auto">
+          <img class="img-fluid " src="{% static 'img/Yuhan.jpg' %}" alt="">
+        </div>
+        <div class="col-lg-6">
+          <div class="bg-black text-center h-100 project">
+            <div class="d-flex h-100">
+              <div class="project-text w-100 my-auto text-center text-lg-left">
+                <h4 class="text-white">Yuhan Bang</h4>
+                <p class="mb-0 text-white-50">E-Mail : fangyuhan@naver.com</p>
+                <hr class="d-none d-lg-block mb-0 ml-0">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Signup Section -->
+  <section id="signup" class="signup-section">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-10 col-lg-8 mx-auto text-center">
+
+          <i class="far fa-paper-plane fa-2x mb-2 text-white"></i>
+          <h2 class="text-white mb-5">There are a variety of ways you can get in touch with the DREAM Team. Get support, find out what is new, or notify us of new malware.</h2>
+        </div>
+      </div>
+    </div>
+  </section>
+
+{% endblock %}
+
