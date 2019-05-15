@@ -1,12 +1,9 @@
 import sys
-import os
 
 from dreamav.cli import cli
 
 
-# TODO(@LEO_MOON) add start options
 def main():
-    print(sys.argv)
     if sys.argv[1] == 'start':
         sys.argv.pop(1)
         cli.start()
@@ -16,6 +13,9 @@ def main():
     elif sys.argv[1] == "submit":
         sys.argv.pop(1)
         cli.submit()
+    elif sys.argv[1] == "scan":
+        sys.argv.pop(1)
+        cli.scan()
 
     
 if __name__ == '__main__':

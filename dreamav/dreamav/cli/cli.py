@@ -3,6 +3,8 @@ import magic
 import click
 import os
 
+from virus_total_apis import PublicApi
+
 from dreamav.__init__ import __ROOT__
 from dreamav.core import predict
 from dreamav.util import generate_feature_vector_pdf
@@ -16,11 +18,25 @@ def stop():
     os.system("pkill uwsgi && pkill dreamav")
 
 @click.command()
-def scan():
-    pass
+@click.argument("path", type=click.Path(exists=True))
+def scan(path):
+    # Fill in your VirusTotal public api key
+    api_key = ''
+    if api_key != '':
+        try:
+            vt = PublicApi(api_key)
+            res = vt.scan_file(path)
+
+            if res["response_code"] == 200:
+                print("Complete Requesting Scan", path)
+            else:
+                print("Error")
+        except Exception as e:
+            print("Error:", e)
+    else:
+        print("Need VirusTotal API Key")
 
 @click.command()
-# @click.argument("path")
 @click.argument("path", type=click.Path(exists=True))
 def submit(path):
     file_name = os.path.basename(path)
@@ -38,7 +54,7 @@ def submit(path):
     print("#" * 30)
     print(f"File name: {file_name}")
     print(f"File type: {file_magic}")
-    print(f"Malicious Probability: {output['result']}")
+    print(f"Probability of malicious: {output['result']}")
     print("#" * 30)
 
 # if __name__ == '__main__':
