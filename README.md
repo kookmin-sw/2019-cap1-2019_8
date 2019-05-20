@@ -71,7 +71,7 @@ Role : 로고 디자인, 유저 인터페이스 구현
 ```
 
 ## Installation & Usage
-DreamAV: [INSTALL](https://pypi.org/project/dreamav/#files) | [USAGE](https://github.com/kookmin-sw/2019-cap1-2019_8/tree/master/dreamav)
+DreamAV: [INSTALL](https://pypi.org/project/dreamav/) | [USAGE](https://github.com/kookmin-sw/2019-cap1-2019_8/tree/master/dreamav)
 
 
 ## Reference
@@ -91,7 +91,7 @@ DreamAV: [INSTALL](https://pypi.org/project/dreamav/#files) | [USAGE](https://gi
 ## Support
 * Discuss on the [DREAMAV slack team](https://dreamav.slack.com)
   * Contact us to join the team
-* Open bug reports and feature requests on [GitHub issues](https://github.com/kookmin-sw/2019-cap1-2019_8/issues).
+* Open bug reports and feature requests on [GitHub issues](https://github.com/kookmin-sw/2019-cap1-2019_8/issues) 
 
 ## License
 This project is licensed under the terms of the MIT license. See [LICENSE](https://github.com/kookmin-sw/2019-cap1-2019_8/blob/master/LICENSE) for additional details.

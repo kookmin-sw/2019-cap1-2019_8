@@ -79,7 +79,10 @@ Click==7.0
 requests==2.21.0
 tensorflow==1.13.1
 keras==2.2.4
-scikit-learn==0.20.0
+scikit-learn==0.20.2
+xgboost==0.82
+virustotal-api==1.1.10
+pandas=0.24.1
 ```
 
 ## Contact Us
