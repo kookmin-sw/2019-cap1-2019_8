@@ -70,8 +70,9 @@ E-Mail : fangyuhan@naver.com
 Role : 로고 디자인, 유저 인터페이스 구현
 ```
 
-## Installation
-Dream-AV: [INSTALL DREAMAV](https://github.com/kookmin-sw/2019-cap1-2019_8/tree/master/dreamav)
+## Installation & Usage
+DreamAV: [INSTALL](https://pypi.org/project/dreamav/#files) | [USAGE](https://github.com/kookmin-sw/2019-cap1-2019_8/tree/master/dreamav)
+
 
 ## Reference
 **URL**

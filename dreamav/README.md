@@ -11,7 +11,7 @@
 pip3 install dreamav
 ```
 
-## HOW TO USE
+## USAGE
 ```bash
 # Start dreamav 
 dreamav start
@@ -24,6 +24,11 @@ dreamav submit /path/to/file
 
 # Request scan to VirusTotal(need VirusTotal API key)
 dreamav scan /path/to/file
+```
+
+### API
+```buildoutcfg
+[POST] /dream_upload : upload file to engine 
 ```
 
 ## HOW TO INTERLOCK WITH YOUR SERVER
@@ -46,7 +51,10 @@ We provide results to json like below, select the results of model you want
     }
 }
 ```
+
 in your server, upload file to engine like below, and set a threshold.
+
+
 ```buildoutcfg
 # example/django
 req = requests.post("http://localhost:8080/dream_upload", \
