@@ -16,7 +16,7 @@ def get_requirements():
 requires = get_requirements()
 setup(
     name = 'dreamav',
-    version = '0.2.5',
+    version = '0.2.7',
     description = "This package is for detecting malicious document",
     author = ["Damin Moon", "Kihwan Kim", "HyunSeok Kim", "Hyeri Jung", "Yuhan Bang"],
     author_email = "vmfn0401@gmail.com",
@@ -24,8 +24,8 @@ setup(
     url = "https://github.com/kookmin-sw/2019-cap1-2019_8",
     packages=find_packages(),
     package_data = {
-        "model": glob.glob(os.path.join(__ROOT__, "util/model/*")),
-        "ini": [os.path.join(__ROOT__, "dream.ini")]
+        "util": ["model/*"],
+        "": ["*"]
     },
     zip_safe=False,
     setup_requires=requires,

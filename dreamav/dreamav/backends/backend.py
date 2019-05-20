@@ -1,6 +1,7 @@
 import numpy as np
 import magic
 import os
+import time
 
 from flask import Flask, request, jsonify
 from werkzeug.utils import secure_filename
@@ -13,27 +14,30 @@ application = Flask(__name__)
 def Print():
     return "DREAM-AV"
 
-
-# TODO(@LEO_MOON) Feature extraction and predict based on file
-@application.route("/dream_upload", methods=["GET", "POST"])
+@application.route("/dream_upload", methods=["POST"])
 def upload_file():
     if request.method == "POST":
+        start = time.time()
         file = request.files["file"]
+        print(time.time() - start)
         filename = secure_filename(file.filename)
         file.save(filename)
         file_magic = magic.from_file(filename)
 
         if "PDF" in file_magic:
             feature = generate_feature_vector_pdf.extract(filename)
+            start = time.time()
             result_dict = predict.predict_pdf(feature)
             os.remove(filename)
+            print(time.time() - start)
             return jsonify(result_dict)
 
         elif "Composite Document" in file_magic:
             f_list = np.array([filename])
             result_dict = predict.predict_msword(f_list, np.zeros((f_list.shape)))
             os.remove(filename)
-            return jsonify({result_dict})
+            print(time.time() - start)
+            return jsonify(result_dict)
 
         else:
             return jsonify({
