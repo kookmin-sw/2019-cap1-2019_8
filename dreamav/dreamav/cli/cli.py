@@ -1,7 +1,10 @@
+import json
 import numpy as np
 import magic
 import click
 import os
+import warnings
+warnings.filterwarnings("ignore", "DeprecationWarning")
 
 from virus_total_apis import PublicApi
 
@@ -45,16 +48,16 @@ def submit(path):
     if "PDF" in file_magic:
         feature = generate_feature_vector_pdf.extract(path)
         output = predict.predict_pdf(feature)
-    elif "Microsoft Word" in file_magic:
+    elif "Composite Document File" in file_magic:
         f_list = np.array([path])
-        output = predict.predict_msword(f_list, np.zeros((f_list)))
+        output = predict.predict_msword(f_list, np.zeros((f_list.shape)))
     else:
         print(f"Unsupported file format", path)
         return
     print("#" * 30)
     print(f"File name: {file_name}")
     print(f"File type: {file_magic}")
-    print(f"Probability of malicious: {output['result']}")
+    print(f"Probability of malicious: \n{json.dumps(output['result'], indent=4)}")
     print("#" * 30)
 
 # if __name__ == '__main__':

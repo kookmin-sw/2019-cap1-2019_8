@@ -29,10 +29,10 @@ def predict_pdf(feature):
 
     return {
         "result": {
-            "LightGBM": str(lgb_output),
-            "XGBoost": str(xgb_output),
-            "DT": str(dt_output),
-            "RF": str(rf_output)
+            "LightGBM": str("%0.4f" % lgb_output),
+            "XGBoost": str("%0.4f" % xgb_output),
+            "DT": str("%0.4f" % dt_output),
+            "RF": str("%0.4f" % rf_output)
         }
     }
 
@@ -48,6 +48,6 @@ def predict_msword(f_list, label, batch_size=64, verbose=1):
 
     return {
         "result": {
-            "DL": str(output)
+            "DL": str("%0.4f" % output)
         }
     }
