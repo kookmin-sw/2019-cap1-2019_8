@@ -6,7 +6,7 @@ from django.views import View
 
 from .forms import DocumentForm
 from .models import Document
-
+import requests
 
 
 class ProgressBarUploadView(View):
@@ -18,11 +18,19 @@ class ProgressBarUploadView(View):
         time.sleep(1)  # You don't need this line. This is just to delay the process so you can see the progress bar testing locally.
         form = DocumentForm(self.request.POST, self.request.FILES)
 
-        if form.is_valid():
-            file = form.save()
-            data = {'is_valid': True, 'name': file.file.name, 'url': file.file.url}
+        # send engine
+        req = requests.post("http://localhost:8080/dream_upload", files={"file": self.request.FILES["file"]})
+        if req.status_code == 200:
+            result = req.json()
+            if float(result["result"]["LightGBM"]) < 0.5:
+                file = form.save()
+                data = {'is_valid': True, 'name': file.file.name, 'url': file.file.url}
+            else:
+                data = {'is_valid': False}
+                print("Detected Malicious file")
         else:
             data = {'is_valid': False}
+            print("ERROR")
 
         return JsonResponse(data)
 
