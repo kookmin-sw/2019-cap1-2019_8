@@ -29,7 +29,7 @@
             {% if user.is_authenticated %}
                 {% for d_file in files %}
                   <tr>
-                      <td><a href="{{ d_file.file.url }}"> Download </a></td>
+                      <td><a href="{{ d_file.file.url }}" download> Download </a></td>
                       <td>{{ d_file.title }}</td>
                       <td>{{ d_file.md5 }}</td>
                       <td>{{ d_file.size }} KB</td>
