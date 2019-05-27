@@ -19,7 +19,6 @@ def upload_file():
     if request.method == "POST":
         start = time.time()
         file = request.files["file"]
-        print(time.time() - start)
         filename = secure_filename(file.filename)
         file.save(filename)
         file_magic = magic.from_file(filename)
@@ -29,17 +28,16 @@ def upload_file():
             start = time.time()
             result_dict = predict.predict_pdf(feature)
             os.remove(filename)
-            print(time.time() - start)
             return jsonify(result_dict)
 
         elif "Composite Document" in file_magic:
             f_list = np.array([filename])
             result_dict = predict.predict_msword(f_list, np.zeros((f_list.shape)))
             os.remove(filename)
-            print(time.time() - start)
             return jsonify(result_dict)
 
         else:
+            os.remove(filename)
             return jsonify({
                 "unsupported file format": -1
             })
