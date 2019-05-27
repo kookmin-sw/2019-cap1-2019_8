@@ -24,7 +24,7 @@ setup(
     url = "https://github.com/kookmin-sw/2019-cap1-2019_8",
     packages=find_packages(),
     package_data = {
-        "util": ["model/*"],
+        "util": ["util/model/*"],
         "": ["*"]
     },
     zip_safe=False,
