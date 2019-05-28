@@ -10,11 +10,13 @@ from os.path import join
 from utils import *
 from sklearn.model_selection import StratifiedKFold
 
+from settings import *
+
 warnings.filterwarnings("ignore")
 
 
 BATCH_SIZE = 64
-EPOCH = 10
+EPOCH = 5
 MAX_LEN = 200000
 WIN_SIZE = 500
 
@@ -23,12 +25,12 @@ if __name__ == '__main__':
     model = Malconv(MAX_LEN, WIN_SIZE)
     model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy', precision, recall, f1score])
 
-    data, label = get_file_path("/home/amd1/msword/doc/train")
-    # valid_data, valid_label = get_file_path("/home/amd1/msword/doc/valid")
+    data, label = get_file_path(TRAIN_PATH)
+    valid_data, valid_label = get_file_path(VALID_PATH)
     seed = 7
     np.random.seed(seed)
     # 10 Fold Cross Validation
-    kfold = StratifiedKFold(n_splits=10, shuffle=True, random_state=seed)
+    kfold = StratifiedKFold(n_splits=5, shuffle=True, random_state=seed)
     cv_score = []
     cv_f1_score = []
     for i, (trn_idx, val_idx) in enumerate(kfold.split(data, label), start=1):
@@ -46,13 +48,15 @@ if __name__ == '__main__':
             epochs=EPOCH,
             verbose=1,
             callbacks=[ear, mcp],
-            validation_data=utils.data_generator(data[val_idx], label[val_idx], MAX_LEN, BATCH_SIZE),
-            validation_steps=len(data[val_idx]) // BATCH_SIZE + 1)
+            # validation_data=utils.data_generator(data[val_idx], label[val_idx], MAX_LEN, BATCH_SIZE),
+            # validation_steps=len(data[val_idx]) // BATCH_SIZE + 1)
+            validation_data=utils.data_generator(valid_data, valid_label, MAX_LEN, BATCH_SIZE),
+            validation_steps=len(valid_data) // BATCH_SIZE + 1)
 
 
 
-        _, acc, _, _, _f1score = model.evaluate_generator(utils.data_generator(data[val_idx], label[val_idx], MAX_LEN, BATCH_SIZE),
-                                          verbose=1, steps=len(data[val_idx]) // BATCH_SIZE + 1)
+        _, acc, _, _, _f1score = model.evaluate_generator(utils.data_generator(valid_data, valid_label, MAX_LEN, BATCH_SIZE),
+                                          verbose=1, steps=len(valid_data) // BATCH_SIZE + 1)
         # _, acc, _, _, _f1score = model.evaluate_generator(utils.data_generator(valid_data, valid_label, MAX_LEN, BATCH_SIZE),
         #                                   verbose=1, steps=len(data[val_idx]) // BATCH_SIZE + 1)
         print(f"Validation {model.metrics_names[1]}: {acc}")

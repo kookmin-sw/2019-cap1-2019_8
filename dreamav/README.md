@@ -11,7 +11,7 @@
 pip3 install dreamav
 ```
 
-## RUN
+## USAGE
 ```bash
 # Start dreamav 
 dreamav start
