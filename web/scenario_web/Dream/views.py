@@ -18,7 +18,7 @@ class ProgressBarUploadView(View):
         time.sleep(1)  # You don't need this line. This is just to delay the process so you can see the progress bar testing locally.
         form = DocumentForm(self.request.POST, self.request.FILES)
 
-        # send engine
+       #send engine
         req = requests.post("http://localhost:8080/dream_upload", files={"file": self.request.FILES["file"]})
         if req.status_code == 200:
             result = req.json()
@@ -26,14 +26,13 @@ class ProgressBarUploadView(View):
                 file = form.save()
                 data = {'is_valid': True, 'name': file.file.name, 'url': file.file.url}
             else:
-                data = {'is_valid': False}
+                data = {'is_valid': False, 'is_alert': True}
                 print("Detected Malicious file")
         else:
-            data = {'is_valid': False}
+            data = {'is_valid': False, 'is_alert': False}
             print("ERROR")
 
         return JsonResponse(data)
-
 
 def clear_database(request):
     for d_file in Document.objects.all():
