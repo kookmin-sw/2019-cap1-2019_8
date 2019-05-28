@@ -33,9 +33,10 @@ def upload_file():
             f_list = np.array([filename])
             result_dict = predict.predict_msword(f_list, np.zeros((f_list.shape)))
             os.remove(filename)
-            return jsonify({result_dict})
+            return jsonify(result_dict)
 
         else:
+            os.remove(filename)
             return jsonify({
                 "unsupported file format": -1
             })
