@@ -26,7 +26,6 @@
   <link href="{% static 'css/freelancer.min.css' %}" rel="stylesheet">
  
 </head>
-
 <body id="page-top">
 
   <!-- Navigation -->
@@ -83,16 +82,13 @@
     </div>
   </section>
 
-
   <!-- File Upload Section -->
   <section id="contact">
     <div class="container">
       <h2 class="text-center text-uppercase text-secondary mb-0">File Upload</h2>
       <hr class="star-dark mb-5">
-
        <div class="text-center mt-4">
          <p class="lead"> Click Upload File button to upload document files.</p>
-      </div>
         <div>
           {% block content %}
           {% endblock %}
@@ -104,6 +100,28 @@
 
 
 
+<div class="container">
+  <!-- Trigger the modal with a button -->
+  <button type="button" id="rlagustjr" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal" style="display:None;">
+    버튼</button>
+
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-body">
+          <h3> Detect malicious document.</h3>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
 
 <!-- Bottom -->
   <div class="copyright py-4 text-center text-white">
@@ -111,7 +129,6 @@
       <small>Dream - Do it! Kookmin.Univ 2019 capstone design project 8 team</small>
     </div>
   </div>
-
   <!-- Scroll to Top Button (Only visible on small and extra-small screen sizes) -->
   <div class="scroll-to-top d-lg-none position-fixed ">
     <a class="js-scroll-trigger d-block text-center text-white rounded" href="#page-top">

@@ -28,7 +28,9 @@ $(function () {
         $("#gallery tbody").prepend(
           "<tr><td><a href='" + data.result.url + "'>" + data.result.name + "</a></td></tr>"
         )
-      }
+       } else{
+             $('#rlagustjr').click();
+       }
     }
   });
 
