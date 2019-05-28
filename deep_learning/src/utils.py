@@ -44,6 +44,7 @@ def get_file_path(input_path):
     label_dict = {}
     for csv_path in glob.glob(os.path.join(input_path, "*.csv")):
         with open(csv_path, "r") as f:
+            next(iter(f))
             for line in f.readlines():
                 md5, _label = line.strip().split(",")
 
