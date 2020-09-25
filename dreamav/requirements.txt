@@ -5,7 +5,7 @@ Flask==1.0.2
 python-magic==0.4.15
 Click==7.0
 requests==2.21.0
-tensorflow==1.13.1
+tensorflow==1.15.4
 keras==2.2.4
 scikit-learn==0.20.2
 xgboost==0.82
